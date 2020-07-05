@@ -613,6 +613,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_reward'] = $this->language->get('entry_reward');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_recurring'] = $this->language->get('entry_recurring');
+		//add product type
+		$data['entry_type'] = $this->language->get('entry_type');
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_sku'] = $this->language->get('help_sku');
@@ -630,6 +632,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['help_download'] = $this->language->get('help_download');
 		$data['help_related'] = $this->language->get('help_related');
 		$data['help_tag'] = $this->language->get('help_tag');
+		//add type product
+		$data['help_type'] = $this->language->get('help_type');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -654,6 +658,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_reward'] = $this->language->get('tab_reward');
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
+        $data['types'] = $this->model_catalog_product->getTypes();
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -683,6 +688,12 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_keyword'] = $this->error['keyword'];
 		} else {
 			$data['error_keyword'] = '';
+		}
+
+		if (isset($this->error['type'])) {
+			$data['error_type'] = $this->error['type'];
+		} else {
+			$data['error_type'] = '';
 		}
 
 		$url = '';
@@ -756,6 +767,14 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['product_description'] = array();
 		}
+
+        if (isset($this->request->post['type'])) {
+            $data['type'] = $this->request->post['type'];
+        } elseif (!empty($product_info)) {
+            $data['type'] = $product_info['type'];
+        } else {
+            $data['type'] = '';
+        }
 
 		if (isset($this->request->post['model'])) {
 			$data['model'] = $this->request->post['model'];
@@ -1354,6 +1373,10 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
+		if (!isset($this->request->post['type']) || !$this->validateType($this->request->post['type'])) {
+            $this->error['type'] = $this->language->get('error_type');
+        }
+
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
@@ -1461,4 +1484,13 @@ class ControllerCatalogProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+    private function validateType($type) {
+	    foreach ($this->model_catalog_product->getTypes() as $value){
+	        if($value['type'] == $type){
+	            return true;
+            }
+        }
+	    return false;
+    }
 }

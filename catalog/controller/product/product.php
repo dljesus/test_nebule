@@ -474,8 +474,12 @@ class ControllerProductProduct extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+			if ($product_info['type']){
+                $this->response->setOutput($this->load->view('product/product_' . $product_info['type'], $data));
+            } else {
+                $this->response->setOutput($this->load->view('product/product', $data));
+            }
 
-			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {
 			$url = '';
 

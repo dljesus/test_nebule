@@ -209,19 +209,25 @@ class ControllerProductCategory extends Controller {
 				} else {
 					$rating = false;
 				}
-
-				$data['products'][] = array(
-					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
-					'name'        => $result['name'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
-					'price'       => $price,
-					'special'     => $special,
-					'tax'         => $tax,
-					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-					'rating'      => $result['rating'],
-					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
-				);
+                $data['product'] = array(
+                    'product_id'  => $result['product_id'],
+                    'thumb'       => $image,
+                    'name'        => $result['name'],
+                    'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
+                    'price'       => $price,
+                    'special'     => $special,
+                    'tax'         => $tax,
+                    'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
+                    'rating'      => $result['rating'],
+                    'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
+                );
+				if($result['type']){
+				    $product = $this->load->view('product/thumb_' . $result['type'], $data);
+                } else {
+                    $product = $this->load->view('product/thumb', $data);
+                }
+				unset($data['product']);
+				$data['products'][] = $product;
 			}
 
 			$url = '';

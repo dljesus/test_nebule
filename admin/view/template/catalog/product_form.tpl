@@ -95,6 +95,23 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-data">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="<?php echo $help_type; ?>"><?php echo $entry_type; ?></span></label>
+                <div class="col-sm-10">
+                  <select name="type" id="input-type" class="form-control">
+                    <?php foreach ($types as $value) { ?>
+                      <?php if ($value['type'] == $type) { ?>
+                        <option value="<?php echo $value['type']; ?>" selected="selected"><?php echo $value['name']; ?></option>
+                      <?php } else { ?>
+                        <option value="<?php echo $value['type']; ?>"><?php echo $value['name']; ?></option>
+                      <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <?php if ($error_type) { ?>
+                  <div class="text-danger"><?php echo $error_type; ?></div>
+                  <?php } ?>
+                </div>
+              </div>
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-model"><?php echo $entry_model; ?></label>
                 <div class="col-sm-10">

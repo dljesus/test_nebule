@@ -80,6 +80,7 @@ $_['entry_tag']          	 = 'Product Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
+$_['entry_type']        = 'Select type product';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
@@ -98,6 +99,7 @@ $_['help_filter']            = '(Autocomplete)';
 $_['help_download']          = '(Autocomplete)';
 $_['help_related']           = '(Autocomplete)';
 $_['help_tag']               = 'Comma separated';
+$_['help_type']               = 'Select type product';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
@@ -106,3 +108,8 @@ $_['error_name']             = 'Product Name must be greater than 3 and less tha
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_model']            = 'Product Model must be greater than 1 and less than 64 characters!';
 $_['error_keyword']          = 'SEO URL already in use!';
+$_['error_type']          = 'type product error!';
+
+//service type name
+$_['type_default']          = 'default';
+$_['type_service']          = 'service';
